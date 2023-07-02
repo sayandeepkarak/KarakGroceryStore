@@ -1,4 +1,4 @@
-<form method="POST" action="/login" class="needs-validation was-validated">
+<form method="POST" action="/login" class="needs-validation" novalidate>
     <div class="mb-4">
         <label for="loginEmail" class="form-label">Email</label>
         <input type="email" class="form-control" id="loginEmail" name="loginEmail" required>

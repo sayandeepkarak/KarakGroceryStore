@@ -3,7 +3,7 @@
     Created on : 30-Jun-2023, 6:02:02 pm
     Author     : SAYANDEEP
 --%>
-<%@page import="kgs.Crud,java.sql.*" contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="kgs.Crud,java.sql.*,java.util.ArrayList" contentType="text/html" pageEncoding="UTF-8"%>
 <%
     String uid = request.getParameter("userId");
 %>
@@ -21,20 +21,21 @@
                     <%
                         try{
                             Crud c = new Crud("root","");
-                            ResultSet data = c.getData("SELECT * FROM `cart` WHERE uid="+uid);
-                            if(data.next()){
+                            ResultSet data = c.getData("SELECT c.cid,p.* FROM CART c,products p WHERE c.pid=p.pid AND c.uid="+uid);
+                            while(data.next()){
                                 %>
-                                    <!--<jsp:include page="cartCard.jsp">
-                                        <jsp:param name="imgLink" value="" />
-                                        <jsp:param name="productName" value="" />
-                                        <jsp:param name="price" value="" />
-                                    </jsp:include>-->
+                                    <jsp:include page="cartCard.jsp">
+                                        <jsp:param name="cartId" value='<%= data.getInt("cid") %>' />
+                                        <jsp:param name="imgLink" value='<%= data.getString("img") %>' />
+                                        <jsp:param name="productName" value='<%= data.getString("name") %>' />
+                                        <jsp:param name="price" value='<%= data.getFloat("price") %>' />
+                                        <jsp:param name="stock" value='<%= data.getInt("stock") %>' />
+                                    </jsp:include>
                                 <%
-                            }else{
-                                %><h4>Empty cart</h4><%
                             }
+                            
                         }catch(Exception err){
-                            %><h4>Failed to load items</h4><%
+                            %><h4><%= err.getMessage() %></h4><%
                         }
                     %>
                 </div>
@@ -42,4 +43,3 @@
         </div>
     </div>
 </div>
-

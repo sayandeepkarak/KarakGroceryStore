@@ -1,4 +1,4 @@
-<form action="/register" method="POST" class="needs-validation was-validated" id="registerForm">
+<form action="/register" method="POST" class="needs-validation" id="registerForm" novalidate>
   <div class="mb-4">
     <label for="fname" class="form-label">Fullname</label>
     <input type="text" class="form-control" name="fname" id="fname" minlength="7" maxlength="40" required />

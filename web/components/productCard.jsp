@@ -10,25 +10,29 @@
     String img =request.getParameter("imgLink");
     String uid =request.getParameter("userId");
     String pid =request.getParameter("productId");
+    int stock =Integer.parseInt(request.getParameter("stock"));
 %>
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<div class="card" style="width: 18rem;">
+<div class="card" style="width: 18rem; height:min-content;">
    <img src="<%= img %>" class="card-img-top" alt="x">
    <div class="card-body">
-   <p class="card-title"><%= name %></p>
-   <h4 class="card-text">₹<%= price %></h4>
-   <p>FREE delivery</p>
-   <form method="POST" action="addToCart">
-       <%
-           if(isVerified){
-                %>
-                    <input type="hidden" value="<%= uid %>" name="userId" />
-                    <input type="hidden" value="<%= pid %>" name="productId" />
-                <%
-           }
-       %>
-       <button class="btn btn-dark" <%= !isVerified ? "type='button' data-bs-toggle='modal' data-bs-target='#loginModal'" : "type='submit'" %>>Add to cart</button>
-   </form>
+        <p class="card-title"><%=name %></p>
+        <h4 class="card-text">₹<%=price %></h4>
+        <%= stock>0 ? "<p>FREE delivery</p>" : "<p class='text-danger'>Out of stock</p>" %>
+        <form method="POST" action="addToCart">
+            <%
+                if(isVerified){
+                     %>
+                         <input type="hidden" value="<%=uid %>" name="userId" />
+                         <input type="hidden" value="<%=pid %>" name="productId" />
+                     <%
+                }
+            %>
+            <% if(stock>0){ %>
+            <button class="btn btn-dark" <%= !isVerified ? "type='button' data-bs-toggle='modal' data-bs-target='#loginModal'" : "type='submit'" %>>Add to cart</button>
+            <% } %>
+        </form>
+   </div>
 </div>

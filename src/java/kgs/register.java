@@ -6,6 +6,7 @@ package kgs;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.sql.ResultSet;
@@ -14,6 +15,7 @@ import java.sql.ResultSet;
  *
  * @author admin
  */
+@WebServlet(name = "register", urlPatterns = {"/register"})
 public class register extends HttpServlet {
 
     @Override
@@ -40,6 +42,7 @@ public class register extends HttpServlet {
                     Cookie userId = new Cookie("userId",Integer.toString(id));
                     response.addCookie(userType);
                     response.addCookie(userId);
+                    Helper.setAlert(false, "Your account is registered succesfully", request);
                 }else{
                     HttpSession sess = request.getSession();
                     sess.setAttribute("isAlert",true);
