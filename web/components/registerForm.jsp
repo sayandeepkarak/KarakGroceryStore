@@ -25,6 +25,6 @@
     <div class="invalid-feedback">Invalid address</div>
   </div>
   <div class="col-12">
-    <button class="btn btn-dark w-100" type="submit">Register</button>
+    <button class="lightBtn w-100" type="submit">Register</button>
   </div>
 </form>

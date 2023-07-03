@@ -3,7 +3,7 @@
     <% 
         Cookie[] cookies=request.getCookies(); 
         boolean isVerified=false; 
-        String utype="" ; 
+        String utype="",name="" ; 
         int id=-1;
         if(cookies != null){
             for(Cookie cookie:cookies){ 
@@ -17,9 +17,10 @@
                 if(utype.equals("user")){
                     try{
                         Crud c=new Crud("root",""); 
-                        ResultSet data=c.getData("SELECT `uid` FROM `users`");
+                        ResultSet data=c.getData("SELECT `uid`,`fname` FROM `users`");
                         if(data.next()){ 
                           isVerified=true;
+                          name = data.getString("fname");
                         }
                     }catch(Exception err){
                        Helper.setAlert(true, "Internal server error", request);
@@ -33,9 +34,11 @@
         <html>
 
         <head>
+          <title>KGS</title>
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <link rel="stylesheet" href="css/bootstrap.min.css">
+          <link rel="stylesheet" href="css/global.css">
         </head>
 
         <body>
@@ -43,21 +46,28 @@
             <jsp:param name="isVerified" value="<%= isVerified %>" />
             <jsp:param name="userId" value="<%= id %>" />
             <jsp:param name="showCart" value="true" />
+            <jsp:param name="userName" value="<%=name%>" />
           </jsp:include>
           <main>
             <jsp:include page="components/carosoul.jsp"></jsp:include>
             <div class="container-fluid d-flex justify-content-sm-between align-items-center flex-wrap w-100 py-3 px-5">
-              <h5>Products</h5>
+              <h5 class="m-0">Products</h5>
               <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-dark">Search</button>
+                <input class="form-control me-2" type="search" name="product" placeholder="Search" aria-label="Search">
+                <button class="lightBtn">Search</button>
+                <a href="/" class="falseBtn ms-1" >Clear</a>
               </form>
             </div>
             <div class="container-fluid d-flex justify-content-around flex-wrap w-100 py-3 px-5 gap-1">
               <%
                   try{
+                      String search = request.getParameter("product");
                       Crud c = new Crud("root","");
-                      ResultSet data = c.getData("SELECT * from `products`");
+                      String query = "SELECT * from `products`";
+                      if(search != null && !search.isEmpty()){
+                        query+=" WHERE `name` LIKE '%"+search+"%'";
+                      }
+                      ResultSet data = c.getData(query);
                       while(data.next()){
                           %>
                           <jsp:include page="components/productCard.jsp">
@@ -72,7 +82,7 @@
                           <%
                       }
                   }catch(Exception err){
-                      Helper.setAlert(true, "Internal server error", request);
+                      Helper.setAlert(true, err.getMessage(), request);
                   }
               %>
             </div>
@@ -82,7 +92,7 @@
                   if(isAlert){
                       boolean isErr = (boolean) session.getAttribute("isError");
                       %>
-                      <div class="alert <%= isErr ? "alert-danger" : "alert-success" %> alert-dismissible fade show position-absolute top-0 w-100" style="margin-top: 54px;left:0;" role="alert">
+                      <div class="alert <%= isErr ? "alert-danger" : "alert-success" %> alert-dismissible fade show position-absolute top-0 w-100" role="alert">
                           <strong><%= !isErr ? "Success" : "Error" %>!</strong> <%= session.getAttribute("message") %>
                           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                       </div>

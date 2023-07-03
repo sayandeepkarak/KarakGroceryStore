@@ -4,7 +4,7 @@
         if(request.getMethod().equals("POST")){
             Cookie[] cookies=request.getCookies(); 
             boolean isVerified=false; 
-            String utype="" ; 
+            String utype="", name="" ; 
             int id=-1; 
             if(cookies !=null){
                 for(Cookie cookie:cookies){ 
@@ -19,9 +19,10 @@
                 if(utype.equals("user")){ 
                     try{ 
                         Crud c=new Crud("root",""); 
-                        ResultSet data=c.getData("SELECT `uid` FROM `users`");
+                        ResultSet data=c.getData("SELECT `uid`,`fname` FROM `users`");
                         if(data.next()){ 
-                            isVerified=true; 
+                            isVerified=true;
+                            name = data.getString("fname");
                         } else { 
                             Helper.setAlert(true, "Invalid access to checkout page" , request);
                             response.sendRedirect("/"); 
@@ -58,7 +59,9 @@
         <head>
           <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
           <title>Checkout</title>
-          <link rel="stylesheet" href="css/bootstrap.min.css">
+          <link rel="stylesheet" href="css/bootstrap.min.css"><title>KGS</title>
+          <meta charset="UTF-8">
+          <link rel="stylesheet" href="css/global.css">
         </head>
 
         <body>
@@ -66,6 +69,7 @@
             <jsp:param name="isVerified" value="<%= isVerified %>" />
             <jsp:param name="userId" value="<%= id %>" />
             <jsp:param name="showCart" value="false" />
+            <jsp:param name="userName" value="<%=name%>" />
           </jsp:include>
           <main class="container my-5">
             <div class="row g-5">
@@ -113,7 +117,7 @@
                     <strong>₹<%=totalAmount%></strong>
                   </li>
                   <li class="list-group-item d-flex justify-content-between">
-                      <a href="/" class="btn btn-dark w-100">Cancle</a>
+                      <a href="/" class="lightBtn w-100">Cancle</a>
                   </li>
                 </ul>
               </div>

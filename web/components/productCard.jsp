@@ -31,7 +31,7 @@
                 }
             %>
             <% if(stock>0){ %>
-            <button class="btn btn-dark" <%= !isVerified ? "type='button' data-bs-toggle='modal' data-bs-target='#loginModal'" : "type='submit'" %>>Add to cart</button>
+            <button class="lightBtn" <%= !isVerified ? "type='button' data-bs-toggle='modal' data-bs-target='#loginModal'" : "type='submit'" %>>Add to cart</button>
             <% } %>
         </form>
    </div>

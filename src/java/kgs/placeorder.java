@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
+import java.time.LocalDateTime;
 /**
  *
  * @author SAYANDEEP
@@ -21,6 +22,7 @@ public class placeorder extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String contact = request.getParameter("contact");
         int cid = Integer.parseInt(request.getParameter("cid"));
         int qty = Integer.parseInt(request.getParameter("quantity"));
         String land = request.getParameter("landmark");
@@ -39,8 +41,8 @@ public class placeorder extends HttpServlet {
             int delivery = amount>500 ? 0 : qty*20;
             int totalAmount = amount - discount + delivery;
             
-            String placeQuery = "INSERT INTO `orders`(`pid`,`uid`,`qty`,`delivery`,`discount`,`landmark`,`address`,`zip`,`amount`) ";
-            placeQuery+="VALUES("+pid+","+uid+","+qty+","+delivery+","+discount+",'"+land+"','"+address+"',"+zip+","+totalAmount+")";
+            String placeQuery = "INSERT INTO `orders`(`pid`,`uid`,`qty`,`delivery`,`discount`,`landmark`,`address`,`zip`,`contact`,`amount`) ";
+            placeQuery+="VALUES("+pid+","+uid+","+qty+","+delivery+","+discount+",'"+land+"','"+address+"',"+zip+","+contact+","+totalAmount+")";
             c.dispatchOperation(placeQuery);
             c.dispatchOperation("DELETE FROM `cart` WHERE `cid`="+cid);
             c.dispatchOperation("UPDATE `products` SET `stock`="+newStock+" WHERE `pid`="+pid);

@@ -2,23 +2,24 @@
     boolean isVerified = Boolean.parseBoolean(request.getParameter("isVerified")); 
     String uid = request.getParameter("userId");
     boolean showCart = Boolean.parseBoolean(request.getParameter("showCart"));
+    String userName = request.getParameter("userName");
 %>    
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example">
     <div class="container-fluid mx-4">
-      <h5 class="navbar-brand mb-0 h1">Karak-Grocery-Store</h5>
+      <img src="images/KGS.png" class="myLogo" alt="KGS">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarsExample03">
           <% if(!isVerified){ %>
             <div class="d-flex gap-1">
-                <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
-                <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#signupModal">Signup</button>
+                <button class="myBtnLight" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                <button class="myBtn" data-bs-toggle="modal" data-bs-target="#signupModal">Signup</button>
             </div>
           <% }else{ %>
             <div class="flex-shrink-0 dropdown">
               <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                  <p class="d-inline-block m-0" style="color:#ffffff;"><%=userName%></p>
               </a>
               <ul class="dropdown-menu text-small shadow dropdown-menu-end" aria-labelledby="dropdownUser2">
                 <% if(showCart){ %>

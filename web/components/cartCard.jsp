@@ -43,9 +43,9 @@
                     %>
                     <div class="mt-4">
                         <% if(stock>0){ %>
-                            <button type="submit" class="btn btn-dark">Checkout</button>
+                            <button type="submit" class="lightBtn">Checkout</button>
                         <% } %>
-                        <a href="/removeFromCart?cartId=<%=cartId %>" class="btn btn-outline-dark">Remove</a>
+                        <a href="/removeFromCart?cartId=<%=cartId %>" class="falseBtn">Remove</a>
                     </div>
                 </form>
             </div>

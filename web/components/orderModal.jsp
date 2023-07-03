@@ -32,6 +32,7 @@
                                         <jsp:param name="landmark" value='<%=data.getString("landmark")%>' />
                                         <jsp:param name="address" value='<%=data.getString("address")%>' />
                                         <jsp:param name="zip" value='<%=data.getInt("zip")%>' />
+                                        <jsp:param name="orderDate" value='<%=data.getDate("orderDate")%>' />
                                     </jsp:include>  
                                 <%
                             }
