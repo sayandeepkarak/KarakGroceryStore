@@ -17,15 +17,24 @@
                 if(utype.equals("user")){
                     try{
                         Crud c=new Crud("root",""); 
-                        ResultSet data=c.getData("SELECT `uid`,`fname` FROM `users`");
+                        ResultSet data=c.getData("SELECT `uid`,`fname` FROM `users` WHERE `utype`='user' AND `uid`="+id);
                         if(data.next()){ 
                           isVerified=true;
                           name = data.getString("fname");
+                        }else{
+                            for(Cookie cookie:cookies){ 
+                                if(cookie.getName().equals("userId") || cookie.getName().equals("userType")){ 
+                                    cookie.setMaxAge(0);
+                                    response.addCookie(cookie);
+                                }
+                            }
                         }
                     }catch(Exception err){
                        Helper.setAlert(true, "Internal server error", request);
                     }
-                } 
+                }else if(utype.equals("admin")){
+                    response.sendRedirect("/adminPanel.jsp");
+                }
             } 
         }
     %>

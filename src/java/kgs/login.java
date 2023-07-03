@@ -35,6 +35,8 @@ public class login extends HttpServlet {
                 response.addCookie(userId);
                 if(uType.equals("user")){
                     response.sendRedirect("/");
+                }else if(uType.equals("admin")){
+                    response.sendRedirect("/adminPanel.jsp");
                 }
             }else{
                 Helper.setAlert(true, "Invalid username and password", request);

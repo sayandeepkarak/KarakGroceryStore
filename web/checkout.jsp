@@ -19,7 +19,7 @@
                 if(utype.equals("user")){ 
                     try{ 
                         Crud c=new Crud("root",""); 
-                        ResultSet data=c.getData("SELECT `uid`,`fname` FROM `users`");
+                        ResultSet data=c.getData("SELECT `uid`,`fname` FROM `users` WHERE `utype`='user' AND uid="+id);
                         if(data.next()){ 
                             isVerified=true;
                             name = data.getString("fname");
