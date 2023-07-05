@@ -54,34 +54,7 @@
         <div class="my-3">
             <div class="form-check">
                 <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
-                <label class="form-check-label" for="credit">Credit card</label>
-            </div>
-            <div class="form-check">
-                <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
-                <label class="form-check-label" for="debit">Debit card</label>
-            </div>
-        </div>
-        <div class="row gy-3">
-            <div class="col-md-6">
-                <label for="cc-name" class="form-label">Name on card</label>
-                <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                <small class="text-muted">Full name as displayed on card</small>
-                <div class="invalid-feedback">Name on card is required</div>
-            </div>
-            <div class="col-md-6">
-                <label for="cc-number" class="form-label">Card number</label>
-                <input type="number" class="form-control" id="cc-number" min="111111111111" max="999999999999" required>
-                <div class="invalid-feedback">Card number is required</div>
-            </div>
-            <div class="col-md-4">
-                <label for="cc-expiration" class="form-label">Expiration</label>
-                <input type="date" class="form-control" id="cc-expiration" required>
-                <div class="invalid-feedback">Expiration date required</div>
-            </div>
-            <div class="col-md-3">
-                <label for="cc-cvv" class="form-label">CVV</label>
-                <input type="number" class="form-control" id="cc-cvv" min="100" max="999" required>
-                <div class="invalid-feedback">Security code required</div>
+                <label class="form-check-label" for="credit">Cash on delivery</label>
             </div>
         </div>
         <hr class="my-4">

@@ -101,3 +101,28 @@ input,textarea,select,.card,.list-group{
 .link-dark,a.lightBtn:hover{
     color: #fff;
 }
+
+.dropdown-item{
+    cursor:pointer;
+}
+
+.sidebar{
+    width: 250px; 
+    background-color: var(--theme) !important;
+}
+
+.nav-link{
+    color:#ffffff;
+    text-align: left;
+    padding: .5rem 1.3rem;
+}
+
+.nav-link:hover{
+    color: #fff;
+    opacity: .8;
+}
+
+.nav-link.active{
+    background-color: var(--light) !important;
+    color:#000 !important;
+}

@@ -17,6 +17,8 @@
     int zip = Integer.parseInt(request.getParameter("zip"));
     LocalDate orderDate =LocalDate.parse(request.getParameter("orderDate"));
     LocalDate recDate = orderDate.plusDays(3);
+    int status = Integer.valueOf(request.getParameter("status"));
+    String[] statusTxt = {"Ordered","Shipped","Out for deliver","Delivered"};
 %>
 <div class="card mb-3 w-100">
     <div class="row g-0">
@@ -27,15 +29,21 @@
             <div class="card-body">
                 <p class="card-text fw-bold">OrderId : <%=oid%>&nbsp;</p>
                 <p><b>Placed</b> <%=orderDate%>&nbsp;&nbsp;<b>Recieve</b> <%=recDate%></p>
-                <p class="card-text"><%=productName%><br/>Quantity : <%=qty%>&nbsp;&nbsp;<b>Total : <%=total%></b></p>
+                <p class="card-text"><%=productName%><br/>Quantity : <%=qty%>&nbsp;&nbsp;<b>Total : ₹<%=total%></b></p>
                 <p class="d-inline-block m-0">SHIP TO <%=recName%><br/><%=land%>,<%=address%>,Zip-<%=zip%></p>
-                <p class="fw-normal text-success">Out for delivery</p>
-                <form action="/cancelOrder" method="POST">
-                    <input type="hidden" name="orderId" value="<%=oid%>" /> 
-                    <div class="mt-4">
-                        <button type="submit" class="lightBtn">Cancel order</button>
-                    </div>
-                </form>
+                <p class="fw-normal text-success"><%=statusTxt[status-1]%></p>
+                <%
+                    if(status<3){
+                        %>
+                            <form action="/cancelOrder" method="POST">
+                                <input type="hidden" name="orderId" value="<%=oid%>" /> 
+                                <div class="mt-4">
+                                    <button type="submit" class="lightBtn">Cancel order</button>
+                                </div>
+                            </form>
+                        <%
+                    }
+                %>
             </div>
         </div>
     </div>

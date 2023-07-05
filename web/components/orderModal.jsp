@@ -19,7 +19,7 @@
                     <%
                         try{
                             Crud c = new Crud("root","");
-                            ResultSet data = c.getData("SELECT o.*,p.*,u.* FROM orders o,products p,users u WHERE o.uid=u.uid AND o.pid=p.pid AND o.uid=1");
+                            ResultSet data = c.getData("SELECT o.*,p.*,u.* FROM orders o,products p,users u WHERE o.uid=u.uid AND o.pid=p.pid AND o.uid=1 order by o.oid desc");
                             while(data.next()){
                                 %>
                                     <jsp:include page="orderCard.jsp">
@@ -33,6 +33,7 @@
                                         <jsp:param name="address" value='<%=data.getString("address")%>' />
                                         <jsp:param name="zip" value='<%=data.getInt("zip")%>' />
                                         <jsp:param name="orderDate" value='<%=data.getDate("orderDate")%>' />
+                                        <jsp:param name="status" value='<%=data.getInt("status")%>' />
                                     </jsp:include>  
                                 <%
                             }

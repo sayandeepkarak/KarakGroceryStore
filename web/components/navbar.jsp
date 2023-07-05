@@ -2,6 +2,7 @@
     boolean isVerified = Boolean.parseBoolean(request.getParameter("isVerified")); 
     String uid = request.getParameter("userId");
     boolean showCart = Boolean.parseBoolean(request.getParameter("showCart"));
+    boolean isAdmin = Boolean.parseBoolean(request.getParameter("isAdmin"));
     String userName = request.getParameter("userName");
 %>    
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example">
@@ -25,6 +26,11 @@
                 <% if(showCart){ %>
                   <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#cartModal">Cart</a></li>
                   <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#orderModal">Orders</a></li>
+                <% } %>
+                <% if(isAdmin){ %>
+                  <li>
+                      <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#productModal">Add new</a>
+                  </li>
                 <% } %>
                 <li><hr class="dropdown-divider"></li>
                 <li>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 03, 2023 at 02:09 PM
+-- Generation Time: Jul 05, 2023 at 01:52 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -51,15 +51,19 @@ CREATE TABLE `orders` (
   `zip` int(11) NOT NULL,
   `contact` bigint(11) NOT NULL,
   `amount` int(11) NOT NULL,
-  `orderDate` datetime NOT NULL DEFAULT current_timestamp()
+  `orderDate` datetime NOT NULL DEFAULT current_timestamp(),
+  `status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`oid`, `pid`, `uid`, `qty`, `delivery`, `discount`, `landmark`, `address`, `zip`, `contact`, `amount`, `orderDate`) VALUES
-(4, 3, 1, 3, 60, 23, 'opposite Bargachia petrolpump', 'Bargachia,howrah', 758965, 8016437314, 511, '2023-07-03 16:55:24');
+INSERT INTO `orders` (`oid`, `pid`, `uid`, `qty`, `delivery`, `discount`, `landmark`, `address`, `zip`, `contact`, `amount`, `orderDate`, `status`) VALUES
+(6, 4, 1, 2, 0, 28, 'Opposite bargachia petrolpump', 'Bargachia,howrah', 711452, 8016437314, 540, '2023-07-05 10:53:36', 4),
+(7, 1, 1, 1, 20, 14, 'opposite Bargachia petrolpump', 'bargachia,howrah', 711404, 8016437314, 286, '2023-07-05 16:04:09', 4),
+(8, 7, 1, 3, 0, 27, 'Near hantal gram panchayat', 'Hantal,howrah', 711404, 8016437314, 513, '2023-07-05 16:55:25', 2),
+(9, 10, 1, 1, 20, 4, 'Opposite bargachia petrolpump', 'Bargachia,howrah', 711404, 8016437314, 115, '2023-07-05 17:12:35', 1);
 
 -- --------------------------------------------------------
 
@@ -80,11 +84,25 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`pid`, `name`, `price`, `stock`, `img`) VALUES
-(1, 'Fortune Oil, 1 L Pouch Rice Bran Health', 280, 0, 'https://m.media-amazon.com/images/I/51SW5iGfKpL._SX425_.jpg'),
-(2, 'Unique Aashirvaad Shudh Chakki Atta, 5kg Unique', 240, 0, 'https://m.media-amazon.com/images/I/81+FF+RsymL._SX679_.jpg'),
-(3, 'MAGGI 2-minute Instant Noodles, 840g (12 pouches x 70g each)\n', 158, 0, 'https://m.media-amazon.com/images/I/81Xzx5PHTFL._SX679_PIbundle-12,TopRight,0,0_AA679SH20_.jpg'),
-(4, 'Guud - Family Fit Healthy Sugar |100% Natural | Sulphur free | 1KG', 284, 2, 'https://m.media-amazon.com/images/I/61z+zhhJ6RL._SX679_.jpg\r\n'),
-(5, 'Tata Salt | Vacuum Evaporated Iodised Salt | 10 kg', 220, 2, 'https://m.media-amazon.com/images/I/61pPVRyfmgL._SX679_.jpg');
+(1, 'Fortune Oil, 1 L Pouch Rice Bran Health', 280, 9, 'https://m.media-amazon.com/images/I/51SW5iGfKpL._SX425_.jpg'),
+(2, 'Unique Aashirvaad Shudh Chakki Atta, 5kg Unique', 240, 2, 'https://m.media-amazon.com/images/I/81+FF+RsymL._SX679_.jpg'),
+(3, 'MAGGI 2-minute Instant Noodles(12 pouches)\n', 158, 4, 'https://m.media-amazon.com/images/I/81Xzx5PHTFL._SX679_PIbundle-12,TopRight,0,0_AA679SH20_.jpg'),
+(4, 'Guud - Family Fit Healthy Sugar |100% Natural | 1KG', 284, 0, 'https://m.media-amazon.com/images/I/61z+zhhJ6RL._SX679_.jpg\r\n'),
+(5, 'Tata Salt | Vacuum Evaporated Iodised Salt | 10 kg', 220, 1, 'https://m.media-amazon.com/images/I/61pPVRyfmgL._SX679_.jpg'),
+(6, 'Amazon Brand - Vedaka Whole Jeera (Cumin), 200g', 159, 2, 'https://m.media-amazon.com/images/I/91jx9jfekrL._SX522_.jpg'),
+(7, 'Bakeshree Premium eggless Roasted Bread (400g)', 180, 2, '	https://m.media-amazon.com/images/I/41WXb9NW-zL._AC_UL320_.jpg'),
+(8, 'Pintola Organic Wholegrain Brown Rice Cakes 125 g', 142, 3, '	https://m.media-amazon.com/images/I/71TwA-eDYzL._SX569_.jpg'),
+(9, 'Darling Chicken Masala 200gm+Chicken 65 Masala 200gms+Mutton Masala 400gms', 340, 3, '	https://m.media-amazon.com/images/I/81Tu8Vuq0NL._SX679_PIbundle-4,TopRight,0,0_SX679SY382SH20_.jpg'),
+(10, 'Keya Penne Pasta 1kg,100% Durum Wheat Pasta', 99, 0, 'https://m.media-amazon.com/images/I/61fCfnwBTQL._SX569_.jpg'),
+(11, 'Fortune Rozana Basmati Rice, suitable for daily cooking, 1 kg', 99, 6, 'https://m.media-amazon.com/images/I/51P9gYrBViL.jpg'),
+(12, 'Kissan Fresh Tomato Ketchup 2 kg Pouch', 225, 2, 'https://m.media-amazon.com/images/I/61UHSImAt3L._SX569_.jpg'),
+(13, 'Kellogg Chocos Moons & Stars 1.2kg with Multi Grain', 432, 4, 'https://m.media-amazon.com/images/I/61hm-b9tZ9L._SX679_.jpg'),
+(14, 'Dettol Intense Cool Bathing Soap Bar with Menthol (Pack of 4- 75g each)', 135, 6, 'https://m.media-amazon.com/images/I/61MvUQp2hRL._SX679_.jpg'),
+(15, 'Sunfeast Dark Fantasy Choco Fills, 300g, Original Filled Cookies with Choco CrÃ¨me', 143, 5, 'https://m.media-amazon.com/images/I/81LO0QPqZAL._SX569_.jpg'),
+(16, 'AMUL Butter 200 GM. (Pack of 2)', 228, 6, 'https://m.media-amazon.com/images/I/41znecrbx5L._PIbundle-2,TopRight,0,0_SX500SY343SH20_.jpg'),
+(17, 'Red Bull Energy Drink, Sugar Free, 250 ml', 125, 3, '	https://m.media-amazon.com/images/I/51PeLfYNggL._SX679_.jpg'),
+(18, 'Tata Tea Agni | Strong chai With 10% Extra Strong Leaves | Black Tea | 1.5 kg', 300, 6, 'https://m.media-amazon.com/images/I/61HYcQ3CrlL._SX569_.jpg'),
+(19, 'Saffola Masala Oats | Tasty Evening Snack| Healthy Snack| Classic Masala| 500g', 190, 1, 'https://m.media-amazon.com/images/I/71TjYGru1TL._SX466_.jpg');
 
 -- --------------------------------------------------------
 
@@ -108,9 +126,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`uid`, `utype`, `fname`, `email`, `password`, `mob`, `location`) VALUES
 (1, 'user', 'Aritra Kar', 'hello@gmail.com', 'helloworld', 8016437314, 'Bandel,howrah'),
-(2, 'user', 'Akshay Manna', 'akshay@gmail.com', 'helloworld', 8545869569, 'Hantal,Howrah'),
-(3, 'user', 'Pritam Mal', 'pritam@gmail.com', 'helloworld', 7458541256, 'Hantal,howrah'),
-(4, 'user', 'Rahul Maji', 'rahul@gmail.com', 'rahulrahul', 6523589658, 'Bargachia,Howrah');
+(5, 'admin', 'Sayandeep Karak', 'sayandeep@gmail.com', 'helloworld', 8015427813, 'Hantal,Howrah');
 
 --
 -- Indexes for dumped tables
@@ -148,25 +164,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `oid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `oid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
