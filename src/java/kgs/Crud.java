@@ -24,7 +24,9 @@ public class Crud {
     }
 
     public ResultSet getData(String query) throws ClassNotFoundException, SQLException {
-        return this.stmt.executeQuery(query);
+        ResultSet data = this.stmt.executeQuery(query);
+        this.stmt = this.connection.createStatement();
+        return data;
     }
 
     public boolean dispatchOperation(String query) throws ClassNotFoundException, SQLException {

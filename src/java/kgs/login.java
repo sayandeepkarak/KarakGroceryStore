@@ -23,21 +23,26 @@ public class login extends HttpServlet {
             throws ServletException, IOException {
         String email = request.getParameter("loginEmail");
         String pass = request.getParameter("loginPass");
-        PrintWriter pw = response.getWriter();
         try{
             Crud c = new Crud("root","");
-            ResultSet data = c.getData("SELECT `uid`,`utype` FROM `users` WHERE `email`='"+email+"' AND `password`='"+pass+"'");
+            ResultSet data = c.getData("SELECT `uid`,`utype`,`isVerified` FROM `users` WHERE `email`='"+email+"' AND `password`='"+pass+"'");
             if(data.next()){
-                int id = data.getInt(1);
-                String uType = data.getString(2);
-                Cookie userType = new Cookie("userType",uType);
-                Cookie userId = new Cookie("userId",Integer.toString(id));
-                response.addCookie(userType);
-                response.addCookie(userId);
-                if(uType.equals("user")){
+                Boolean isVerified = data.getInt("isVerified")!=0;
+                if(isVerified){
+                    int id = data.getInt(1);
+                    String uType = data.getString(2);
+                    Cookie userType = new Cookie("userType",uType);
+                    Cookie userId = new Cookie("userId",Integer.toString(id));
+                    response.addCookie(userType);
+                    response.addCookie(userId);
+                    if(uType.equals("user")){
+                        response.sendRedirect("/");
+                    }else if(uType.equals("admin")){
+                        response.sendRedirect("/adminPanel.jsp");
+                    }
+                }else{
+                    Helper.setAlert(true, "Your account is temorarily blocked by the Admin", request);
                     response.sendRedirect("/");
-                }else if(uType.equals("admin")){
-                    response.sendRedirect("/adminPanel.jsp");
                 }
             }else{
                 Helper.setAlert(true, "Invalid username and password", request);

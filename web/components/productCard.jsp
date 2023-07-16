@@ -15,7 +15,7 @@
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<div class="card" style="width: 18rem; height:min-content;">
+<div class="card" style="width: 18rem; height:min-content; margin-bottom: 15px;">
    <img src="<%= img %>" class="card-img-top" alt="x">
    <div class="card-body">
         <p class="card-title"><%=name %></p>

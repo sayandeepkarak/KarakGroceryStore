@@ -66,6 +66,7 @@
                     <button class="nav-link active" id="v-pills-products-tab" data-bs-toggle="pill" data-bs-target="#v-pills-products" type="button" role="tab" aria-controls="v-pills-products" aria-selected="true">Products</button>
                     <button class="nav-link" id="v-pills-orders-tab" data-bs-toggle="pill" data-bs-target="#v-pills-orders" type="button" role="tab" aria-controls="v-pills-orders" aria-selected="false">Orders</button>
                     <button class="nav-link" id="v-pills-orders-tab" data-bs-toggle="pill" data-bs-target="#v-pills-delivered" type="button" role="tab" aria-controls="v-pills-delivered" aria-selected="false">Delivered</button>
+                    <button class="nav-link" id="v-pills-orders-tab" data-bs-toggle="pill" data-bs-target="#v-pills-users" type="button" role="tab" aria-controls="v-pills-users" aria-selected="false">Users</button>
                 </div>
             </div>
             <div class="tab-content w-100 overflow-scroll" id="v-pills-tabContent">
@@ -111,7 +112,7 @@
                                                         <p><%=data.getString("name")%></p>
                                                     </div>
                                                 </td>
-                                                <td><%=data.getInt("price")%></td>
+                                                <td>₹<%=data.getInt("price")%></td>
                                                 <td><%=stock>0 ? stock : "<p class='text-danger m-0 text-nowrap'>Out of stock</p>"%></td>
                                                 <td>
                                                     <form action="/updateStock" method="POST" class="d-flex justify-content-around needs-validation" novalidate>
@@ -175,7 +176,7 @@
                                                         <p class="m-0 ms-4">
                                                             <%=data.getString("name")%><br/>
                                                             Qty: <%=data.getInt("qty")%><br />
-                                                            Amount: <%=data.getInt("amount")%><br/>
+                                                            Amount: ₹<%=data.getInt("amount")%><br/>
                                                             <b>Placed: <%=data.getDate("orderDate")%></b>
                                                         </p>
                                                     </div>
@@ -243,7 +244,7 @@
                                                         <p class="m-0 ms-4">
                                                             <%=data.getString("name")%><br/>
                                                             Qty: <%=data.getInt("qty")%><br />
-                                                            Amount: <%=data.getInt("amount")%><br/>
+                                                            Amount: ₹<%=data.getInt("amount")%><br/>
                                                             <b>Placed: <%=data.getDate("orderDate")%></b>
                                                         </p>
                                                     </div>
@@ -261,6 +262,72 @@
                                         }
                                     }catch(Exception err){
 
+                                    }
+                                %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="v-pills-users" role="tabpanel" aria-labelledby="v-pills-users-tab">
+                    <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap w-100 py-3 px-5">
+                        <h5 class="m-0">All users</h5>
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" name="username" placeholder="User name" aria-label="Search">
+                            <button class="lightBtn">Search</button>
+                            <a href="/" class="falseBtn ms-1" >Clear</a>
+                        </form>
+                    </div>
+                    <div class="container-fluid px-5">
+                        <table class="table table-hover table-responsive mt-3" style="vertical-align:middle;">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Fullname</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    <th>Total orders</th>
+                                    <th>Transactions</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%
+                                    try{
+                                        String username = request.getParameter("username");
+                                        Crud c = new Crud("root","");
+                                        String query = "SELECT * FROM `users` WHERE `uType`='user'";
+                                        if(username != null && !username.isEmpty()){
+                                          query+=" AND fullname LIKE '%"+username+"%'";
+                                        }
+                                        ResultSet data = c.getData(query);
+                                        while(data.next()){
+                                            int uid = data.getInt("uid"),totalOrders = 0,amount=0;
+                                            boolean isValid = data.getInt("isVerified")!=0;
+                                            ResultSet orderData = c.getData("SELECT COUNT(*) AS totalorders,SUM(amount) AS amt FROM `orders` WHERE `uid`="+uid);
+                                            if(orderData.next()){
+                                                totalOrders = orderData.getInt("totalorders");
+                                                amount = orderData.getInt("amt");
+                                            }
+                                            %>
+                                            <tr>
+                                                <td><%=uid%></td>
+                                                <td><%=data.getString("fname")%></td>
+                                                <td><%=data.getString("email")%></td>
+                                                <td><%=data.getLong("mob")%></td>
+                                                <td><%=totalOrders%></td>
+                                                <td>₹<%=amount%></td>
+                                                <td>
+                                                    <form method="POST" action="/changeAccess">
+                                                        <input type="hidden" name="userId" value="<%=uid%>" />
+                                                        <input type="hidden" name="accessvalue" value="<%=isValid ? 0 : 1%>" />
+                                                        <button type="submit" class="lightBtn"><%=isValid ? "Block" : "Unblock"%></button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <%
+                                        }
+                                    }catch(Exception err){
+                                        out.print(err.getMessage());
                                     }
                                 %>
                             </tbody>
